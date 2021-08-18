@@ -130,15 +130,4 @@ list.push(14)
 list.push(16)
 list.push(18)
 
-function reverseArr(arr){ //[3, 5, 11 ,66, 6]
-    let i=0, j =arr.length-1;  
-    while(i<j){
-        let temp = arr[i]; 
-        arr[i] = arr[j]; 
-        arr[j] = temp; 
-        i++; 
-        j--;
-    }
-    return arr;
-}
-console.log(reverseArr([34, 5, 66, 234]))
+
