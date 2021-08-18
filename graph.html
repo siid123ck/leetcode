@@ -1,0 +1,89 @@
+<script>
+   class Graph{
+   constructor(){
+    this.adjacentList = {};
+   }
+   addVertex(vertex){
+       if(!this.adjacentList[vertex]) this.adjacentList[vertex]=[];
+   }
+   addEdge(v1, v2){
+       this.adjacentList[v1].push(v2);
+       this.adjacentList[v2].push(v1);
+   }
+   RemoveEdge(vertex1, vertex2){
+       this.adjacentList[vertex1] = this.adjacentList[vertex1].filter(v=>v!==vertex2)
+       this.adjacentList[vertex2] = this.adjacentList[vertex2].filter(v=>v!==vertex1)
+   }
+   removeVertex(vertex){
+       while(this.adjacentList[vertex].length){
+           var adjanctVertex = this.adjacentList[vertex].pop();
+           this.RemoveEdge(vertex, adjanctVertex);
+           delete this.adjacentList[vertex];
+       }
+   }
+   DFSRecursively(start){
+       var result = [];
+       var visited = {};
+       let adjacentList = this.adjacentList;
+       (function dfs(vertex){
+        if(!vertex) return null;
+        visited[vertex] = true;
+        result.push(vertex);
+       adjacentList[vertex].forEach(element => {
+           if(!visited[element]) return dfs(element);
+       });
+       })(start);
+       return result;
+   }
+  DFSIteratively(start){
+      var result = [];
+      var visited = {};
+      var stack = [start];
+      visited[start] = true;
+      while(stack.length){
+          console.log(stack);
+        const currentVertex = stack.pop();
+        result.push(currentVertex);
+        this.adjacentList[currentVertex].forEach(element => {
+            if(!visited[element]){
+                visited[element] = true;
+                stack.push(element);
+            }
+        });
+      }
+      return result;
+  }
+  BFS(start){
+      var result= [];
+      var visited = {};
+      var queue = [start];
+      visited[start] = true;
+      while(queue.length){
+          console.log(queue);
+          const currentVertex = queue.shift();
+          result.push(currentVertex);
+          this.adjacentList[currentVertex].slice().reverse().forEach(neighbour => {
+              if(!visited[neighbour]){
+                  visited[neighbour] = true;
+                  queue.push(neighbour);
+              }
+          })
+      }
+      return result;
+  }
+   }
+   var g = new Graph()
+   g.addVertex("A");
+   g.addVertex("B");
+   g.addVertex("C");
+   g.addVertex("D");
+   g.addVertex("E");
+   g.addVertex("F");
+   g.addEdge("A", "B");
+   g.addEdge("A", "C");
+   g.addEdge("B", "D");
+   g.addEdge("C", "E");
+   g.addEdge("D", "E");
+   g.addEdge("D", "F");
+   g.addEdge("E", "F");
+</script>

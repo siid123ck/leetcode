@@ -1,0 +1,23 @@
+<script>
+    var getDigit= (num,digit)=> Math.floor((num/Math.pow(10,digit))%10);
+    var digitCount = (num) =>num==0?1: Math.floor(Math.log10(num)+1);
+    var maxDigit = (nums,max=0)=>{
+        for(let i=0; i<nums.length; i++){
+            max= Math.max(digitCount(nums[i]), digitCount(nums[i]));
+        }
+        return max;
+    }
+    function redixSort(arr){
+     let max= maxDigit(arr), digitBucket;
+     for(let k=0; k<max; k++){
+     digitBucket = Array.from({length:10},()=>[]);
+        for(let i=0; i<arr.length; i++){
+            digitBucket[getDigit(arr[i],k)].push(arr[i]);
+        }
+       console.log(digitBucket);
+       arr= [].concat(...digitBucket);
+       console.log(arr);
+     }
+     return arr;
+    }
+</script>

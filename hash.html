@@ -1,0 +1,56 @@
+<script>
+     class Hash{
+         constructor(size =10){
+             this.keyMap = new Array(size);
+         }
+         hashF(keys){
+        let sum = 0;
+        let weirdPrime = 31;
+        for(let i = 0; i< Math.min(keys.length, 100); i++){
+            let char = keys[i];
+            let value = char.charCodeAt(0) - 96;
+            sum = (sum * weirdPrime+ value)%this.keyMap.length;
+        }
+        return sum;
+      }
+      set(keys, value){
+         var index = this.hashF(keys);
+         if(!this.keyMap[index]) {
+             this.keyMap[index] = [];
+         }
+         this.keyMap[index].push([keys, value]);
+      }
+      get(keys){
+          let index = this.hashF(keys);
+          if(this.keyMap[index]){
+         for(let i=0; i<this.keyMap[index].length; i++)
+             if(this.keyMap[index][i][0]===keys)  return this.keyMap[index][i][1];
+          }
+          return;
+      }
+      values(){
+          let value = [];
+          for(let i=0; i<this.keyMap.length; i++){
+              if(this.keyMap[i]){
+                  for(let j=0; j<this.keyMap[i].length; j++){
+                   if(!value.includes(this.keyMap[i][j][1]))
+                   value.push(this.keyMap[i][j][1]); 
+                  }
+              }
+          }
+          return value;
+      }
+     }
+     var h = new Hash();
+     //h.keyMap = ['hello', 'hi'];
+     h.set('green','#fjfkd');
+     h.set('blue','#f43fkd');
+     h.set('cyan','#fjf3d');
+     h.set('salmon','#fjfk2');
+     h.set('orange','#fjfffkd');
+     h.set('grey','#fjfkd11');
+     h.set('salmon','#fjfk2');
+     h.set('orange','#fjfffkd');
+     h.set('grey','#fjfkd11');
+
+</script>

@@ -1,0 +1,29 @@
+<script>
+    function user(){
+        var count = 0;
+    console.log('user')
+        for(let i=0; i<5; i++){
+    count += Math.floor(10+Math.random()*12);
+    }  
+    return count;    
+}
+function computer(){
+    var count =0;
+    console.log('computer')
+    for(let i=0; i<5; i++){
+    count += Math.floor(10+Math.random()*12);
+    }  
+    return count;  
+}
+
+function result(){
+   var x = user();
+   var y = computer();
+   if(x>y) return "user won"
+   if(x<y) return "computer won";
+   else {
+   return result();
+}
+}
+console.log(result())
+</script>

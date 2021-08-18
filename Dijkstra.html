@@ -1,0 +1,75 @@
+<script>
+    class Priority{
+        constructor(){
+            this.values = [];
+        }
+    }
+    class Dijkstra{
+        constructor(){
+            this.adjacencyList = {};
+           // this.values = [];
+        }
+        addVertex(vertex){
+            if(!this.adjacencyList[vertex]) this.adjacencyList[vertex]=[];
+        }
+        addEdges(vertex1, vertex2,weight){
+            this.adjacencyList[vertex1].push({node:vertex2, weight});
+            this.adjacencyList[vertex2].push({node:vertex1, weight});
+        }
+        enqueue(value, priority){
+            this.values.push({value, priority});
+            this.sort();
+        }
+        deQueue(){
+            return this.values.shift();
+        }
+        sort(){
+            this.values.sort((a,b) => {
+              return  a.priority - b.priority;
+            })
+        }
+        dijk(start, end){
+            var nodes = new Priority();
+            const distance = {};
+            const previous = {};
+            var smallest;
+            for(let vertex in this.adjacencyList){
+                if(vertex === start){
+                    //distance[vertex] = 0;
+                    //nodes.enqueue(vertex, 0);
+                } else {
+                    //distance[vertex] = Infinity;
+                    //nodes.enqueue(vertex, Infinity);
+                }
+            }
+            while(nodes.values.length){
+                smallest = nodes.deQueue().value;
+                if(smallest===end){
+                  // done
+                }
+                if(smallest || distance[smallest] !==Infinity){
+                    for(let neighbor in this.adjacencyList[smallest]){
+                        console.log(neighbor);
+                        console.log(this.adjacencyList);
+                    }
+                }
+            }
+        }
+    }
+    var d = new Dijkstra();
+    d.addVertex("A");
+    d.addVertex("B");
+    d.addVertex("C");
+    d.addVertex("D");
+    d.addVertex("E");
+    d.addEdges("A","B", 4);
+    d.addEdges("A","C", 2);
+    d.addEdges("C","B", 1);
+    d.addEdges("C","D", 5);
+    d.addEdges("D","E", 9);
+    d.enqueue("A", 4);
+    d.enqueue("B", 3);
+    d.enqueue("C", 9);
+    d.enqueue("D", 2);
+    d.enqueue("E", 1);
+</script>

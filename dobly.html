@@ -1,0 +1,117 @@
+<script type="text/javascript">
+class Node {
+    constructor(val){
+        this.val = val;
+        this.next = null;
+        this.prev = null;
+    }
+}
+class DoublyLinkedList {
+    constructor(){
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+    }
+    push(val){
+        var newNode = new Node(val);
+        if(!this.head){
+            this.head = newNode;
+            this.tail = this.head;
+        } else {
+        this.tail.next = newNode;
+        newNode.prev= this.tail;
+        this.tail = newNode;}
+        this.length++;
+        return this;
+    }
+    pop(){
+        if(!this.head) return undefined;
+        if(this.length == 1) {
+            this.head = null;
+            this.tail = null;
+        }
+        var temp = this.tail;
+         this.tail =temp.prev;
+        this.tail.next = null;
+        this.length--;
+        return temp;
+    }
+    shift(){
+        var oldHead = this.head;
+        this.head = oldHead.next;
+        this.head.prev = null;
+        oldHead.next = null;
+        this.length--;
+        return oldHead;
+    }
+    unshift(val){
+        var newNode = new Node(val);
+        this.head.prev = newNode;
+        newNode.next = this.head;
+        this.head = newNode;
+        this.length++;
+        return this;
+    }
+    get(index){
+        if(index <this.length/2){
+        var current = this.head;
+        var count =0; 
+        while(count !==index){
+            current = current.next;
+            count++;
+        }
+        return current;
+        } else {
+            var current = this.tail;
+            var count = this.length-1;
+            while(count!==index){
+                current = current.prev;
+                count--;
+            }
+            return current;
+        }
+    }
+    set(val, index){
+        var found = this.get(index);
+        if(found){
+            found.val = val;
+            return true; 
+        }
+        return false;
+    }
+     insert(val, index){
+         var newNode = new Node(val);
+         var before = this.get(index-1);
+         var after = before.next;
+         before.next =newNode;
+         newNode.prev = before;
+         after.prev = newNode;
+         newNode.next = after;
+         this.length++;
+         return newNode;
+     }
+     remove(index){
+         var remove = this.get(index);
+         remove.prev.next = remove.next;
+         remove.next.prev = remove.prev;
+         remove.next = null;
+         remove.prev = null;
+         this.length--;
+         return remove;
+     }
+    print(){
+        var arr=[];
+        var current = this.head;
+        while(current){
+            arr.push(current.val);
+            current= current.next;
+        }
+        return arr;
+    }
+} 
+var list = new DoublyLinkedList();
+list.push('hey');
+list.push('I');
+list.push('am');
+list.push("siid")
+</script>

@@ -1,0 +1,1349 @@
+DATASTRUCTURE AND ALGORITHMS: 
+
+Big O: 
+Big O is a way to formalize fuzzy counting. it allows to talk about how the runtime of an algorithm grow as the inputs grow.
+ Big 0 shorthands:
+  1. arithmetic operation are constant 
+  2. variable assignment is constant 
+  3. accessing elements in an array or object is constant
+  4. in a loop, the complexity is the length of the loop times the complexity of whatever happens inside of the loop,
+
+Big O of objects(use this when you dont need order): 
+ insertion - O(1)
+ removel - O(1)
+ searching - O(N)
+ access - O(1)
+
+ Big O of Object method:
+Object.keys(property) - O(N)
+Object.values - O(N)
+Object.entries(property: value) - O(N)
+hasOwnProperty - O(1)
+
+Big O of Array(use this when you need order): 
+insertion - it depends(eg. esnerting beggining becomes O(N) as it changes the index of all elements 
+and inserting end does O(1) as it does not change all element)
+
+Big O of Array operations: 
+push()- O(1)
+pop()- O(1)
+shift()- O(N)
+slice()- O(N)
+splice()- O(N)
+concat()- O(N)
+sort()- O(N*log N)
+forEach()/map()/filter()/reduce()- O(N)
+
+Algorithm: 
+it is a set of steps performed to accompalish certain task.
+
+How do you improve algorithm: 
+-Device a plan for solving problems
+-Common problem solving patterns 
+
+Problem solving: 
+- Understand the problems 
+- Explore concrete examples 
+- Break it down 
+- Solve/Simplify
+- Look back and refactor
+
+Understand the problems: 
+- can i restate the problems in my word
+- what are the inputs that go into the problem
+- what are the outputs that should come from the solution to the problem
+- can outputs be determined from the inputs 
+- how about i label the important pieces of data that are a part of the problem
+
+Explore examples:
+coming up with example can help you understand the problem better example also provide sanity checks that your eventual solution works how it should
+- start with simple examples
+- progress to more complex examples 
+- explore example with impty inputs 
+- explore examples with invalid inuts
+
+Simplify:
+- find the difficulty in what you are tryng to
+- temporarily ingonre that difficulty
+- write a simplified solution 
+- then incorporate that difficulty back in 
+
+ Lookback and refactor:
+- can you check the result 
+- can you derive the result differently 
+- can you understand it at a glance
+- can you use the result method for some other programs
+- can you improve the performance of your solution
+- can you think of other ways to refactor
+- how have other people solved this problem
+ 
+examle to find frequency of character 
+function count(str){
+  var result={};
+  for(var char of str){
+    if(result[char] >0){
+      result[char]++;
+    } 
+    result[char]=1;
+  }
+  return result;
+}
+ console.log(count("helow Hey Woo ehd"));
+
+Problem solving pattern: 
+- frequency counter
+- multiple pointer
+- sliding window
+- devide and conquer 
+- dynamic programming 
+- greedy programming 
+- backtracing 
+- many more
+
+Frequency counters:
+- this pattern uses objects or sets to collect values/frequencies of values
+- this can aften avoid the need  for nested loops or O(N^2) operations with arrays/strings
+
+example, naive way using nested loop
+function checkarr(arr1, arr2){
+  for(let i=0; i<arr1.length; i++){
+     if(arr1.length!=arr2.length){
+       return false;
+     } 
+      let x= arr2.indexOf(arr1[i]**2);
+      if(x===-1){
+        return "fuck you";
+      }
+      arr2.splice(x, 1)
+  } 
+  return true;
+}
+
+example, using doble loop but not nested
+function anagram(str1, str2){
+var obj= {}; 
+  if(str1.length != str2.length){
+    return false; 
+  } 
+  for(var char of str1){ 
+    obj[char]? obj[char] += 1 : obj[char]=1; 
+  } 
+    for(var char of str2){
+    !obj[char]? false: obj[char] -= 1;
+  }
+  return true;
+}
+
+Multiple poiner: 
+Creating pointers or values that correspond to an index or position and move towards the beginning, end or middle based on a certain condition. very efficient for solving problems with minimal space complexity as well.
+example, where time complexity O(N^2) and space complexity O(1)
+function sum0(arr){
+  for(let i=0; i<arr.length; i++){
+    for(let j=i+1; j<arr.length; j++){
+  if(arr[i] + arr[j]==0) {
+    return [arr[i], arr[j]]
+  }   
+   
+  }   
+  }
+  
+}
+
+exaple, where time complexity O(N) and space complexity O(1)
+function sum0(arr){
+  var left= 0; 
+  var right= arr.length-1;
+  while(left<right){
+    let sum=arr[left]+arr[right];
+    if(sum==0){
+      return [arr[left], arr[right]];
+    }else if(sum >0)  {
+      right --;
+    } else{
+      left ++;
+    }
+  }
+  
+}
+document.write(sum0([-3, -2, -1, 0, 1, 2, 6]))
+
+example, multiple pointer to find unique numbers 
+function countUnique(arr){
+  var i=0; 
+  if(arr.length===0) {return 0;}
+  for(var j=1; j<arr.length; j++){
+    if(arr[i] !== arr[j]){
+      i++;
+      arr[i]=arr[j];
+    }
+  
+  }
+    return i+1;
+} 
+
+Sliding window: 
+example, using O(N^2)
+function max(arr, n){
+ 
+  var max = 0;
+  for(let i=0; i<arr.length-n+1; i++){
+     temp =0;
+    for(let j=0; j<n; j++){
+      temp += arr[i+j];
+    }   
+    if (temp>max){
+      max = temp;
+    }
+  }
+  return max;
+}
+
+exaple, using refactor O(N) [1,2,3,4,5,6]
+function max(arr, n){
+ var temp=0;
+ var max = 0;
+  for(let i=0; i<n; i++){
+    max += arr[i];
+  }
+  temp = max;
+  for(let i=n; i<arr.length; i++){
+    temp = temp +arr[i] -arr[i-n];
+    max = Math.max(temp, max)
+  }
+  return max;
+} 
+
+Recursion: 
+A process (a function in our case) that calls itself is called reccursion.
+It is everywhere:
+-JSON.phrase/JSON.stringfy  
+-document.getElementById and DOM traversal algorithms 
+-Object traversal
+-We will see it with more complex data structures
+-It is sometimes a cleaner alternative to iteration
+
+Example of helper function recursion
+function odd(arr){
+  var newArr=[];
+  function helper(helpingArr){
+    if(helpingArr.length==0) return ;
+    if(helpingArr[0]%2==1){
+      newArr.push(helpingArr[0])
+    }
+    helper(helpingArr.slice(1))
+  }
+  helper(arr)
+  return newArr;
+} 
+
+Pure recursion tips:
+- For arrays, use methods like slice, the spread operator, and concat that makes copies of arrays so you do not mutuate them.
+- Remember that strings are immutable so will need to use methods like slice, substring, substr to make copies of strings
+- To make copies of object use Object.assign or the spread operator
+
+
+Search algorithm: 
+- Describe what a searching algorithm is
+- Implement linear search on arrays 
+- Implement binary search on sorted arrays 
+- Implement a naive strin searching algorithm 
+- Implement the KMP string searching algorithm 
+
+ Javascript search:
+- indexOf - includes - find - findIndex
+
+Linear search Pseudocode
+- This function accepts an array and a value 
+- Loop through the array and check if the current array element is equal to the value
+- If it is, return the index at which the element is found
+- If the value is never found, return true
+
+Binary search: 
+- Binary search is a much faster form of search 
+- Rather than eleminating one element at a time, you can eliminate half of the remaining elements at a time
+- Binary search only works on sorted arrays
+
+Binary search Pseudocode
+- This function accepts a sorted array and a value
+- Create a left pointer at the start of the array, and a right pointer at the end of the array 
+- While the left pointer comes before the right pointer: 
+  - Create a pointer in the middle 
+  - If you find the value you want return the index
+  - If the value is too small move the left pointer up
+  - If the value is too large move the right pointer down
+- If you never find the value return -1
+example,
+function search(arr, val){
+  let start = 0; 
+  let end = arr.length-1;
+  let middle = Math.floor((start + end)/2);
+  while(arr[middle] !== val && val <=arr[end]){
+    if(arr[middle] < val) start = middle +1;
+    else end = middle-1;
+    middle =Math.floor((start + end)/2);
+  }
+  return arr[middle]===val? middle: -1;
+}
+console.log(search([2,4,5,6,20,120], 120))
+
+Naive string search pseudocode:
+- Loop over the longer string 
+- Loop over the shorter string 
+- If the character dont match break out of the inner loop
+- If the do match keep going
+- If you complete the inner loop and find a match increament the counter of matches
+- Return the count 
+
+Sorting: 
+- The built in sort method accepts an optional comparator function
+- You can use this comparator function to tell javascript how you want it to sort
+- The comparator looks at pair of elements (a, b), determine their sort based on the return value:
+  - if it returns a negative(b-a) a should come after b
+  - if it returns a positive(a-b) a should come after before b
+  - if it returns 0 a and b are the same as the sort is concerned
+
+Bubble sort: 
+A sorting algorithm where the largest values bubble up to the top
+- Many sorting algorithms involves some type of swapping functionality 
+eg. function swap(arr, index1, index2){
+     var temp = arr[index1];
+     arr[index1] =arr[index2];
+     arr[index2] = temp;
+    }
+ or, const swap = (arr, index1, index2) =>{
+      [arr[index1], arr[index2]]= [arr[index2], arr[index1]];
+     } 
+
+ Bubble sort Pseudocode: 
+- start looping from with a variable called i the end of the array towards the beginning
+- start inner loop with a variable called j from the begginning until i-1
+- if arr[j] is greater than arr[j+1], swap those two values
+- return the sorted array
+
+example, 
+function sort(arr){
+ for(let i=arr.length; i>0; i--){
+   for(let j=0; j<i-1; j++){
+     if(arr[j]>arr[j+1]){
+       let temp = arr[j];
+       arr[j] =arr[j+1];
+       arr[j+1]= temp;
+     } 
+   }  
+ }
+  return arr;
+  }
+
+Selection sort: 
+similar to bubble sort, but instead of first placing large values into sorted position, it place small values into sorted position.
+Psedocode:
+- store the first element as the smallest value you have seen so far 
+- Compare this item to the next item in the array untill you find a smaller number
+- if a smaller number is found designate that smaller number to be the new minimum and continue until the end of the array
+- if the minimum is not the value you initially began with swap the two values
+- repeat this with the next element until the array is sorted
+example,
+function sort(arr){
+  var swap=(arr,ind1, ind2) => ([arr[ind1],arr[ind2]] =[arr[ind2], arr[ind1]]);
+ for(let i=0; i<arr.length; i++ ){
+   var lowest=i;
+   for(var j=i+1; j<arr.length; j++){
+     if(arr[j]< arr[lowest]) { 
+       lowest =j;
+     }
+ } 
+   if(i!= lowest) swap(arr,  lowest,i )
+   console.log(i, lowest)
+ }
+  return arr;
+  }
+  console.log(sort([1,55,34,5,3,4,52,6]));
+
+Insertion sort: 
+Builds up the sort by gradually creating a larger left half wich is always sorted.
+Ppseudocode: 
+- Start by picking the second element in the array
+- Now compare the second element with one before it and swap if necessary
+- Continue to the next element and if it is in the incorrect order, iterate through the sorted portion(i.e. the left side) to place the element in the correct order.
+- Repeat until the array is sorted
+
+
+Merge sort: 
+- It is a combination of two things, merging and sorting
+- Exploits the fact that arrays of 0 or 1 element are always sorted
+- Works by decomposing an array into smaller arrays of 0 or 1 elements, then building up a new sorted array
+
+Merging array: 
+- In order to implement merge sort, it is useful to implement first a function responsible for merging two sorted arrays
+- Given two arrays which are sorted this helper function should create a new array which is also sorted, and consists of all the elements into two inputs arrays
+- This function should run in O(n+m) time and O(n+m) space and shold not modify the parameters passed to it.
+
+Merging Arrays pseudocode:
+- Create an empty array, take a look at the smallest values in each input array
+- While there are still values we have not looked at:
+  - if the value in the first array is smaller than value in the second array, push the value in the first array into our result and move on to the next value in the first array.
+  - if the value in the first array is larger than the value in the second array, push the value in the second array into our results and move on to the next value in the second array
+  - once we exhaust one array, push in all remaining values from the other array
+ example,
+function merge(arr1,arr2){
+  let i=0; 
+  let j=0; 
+  let result =[];
+  while(i<arr1.length && j< arr2.length){
+    if(arr1[i]< arr2[j]){
+      result.push(arr1[i]);
+      i++;
+    } else {
+      result.push(arr2[j]);
+      j++;
+    }
+  }
+ while(i<arr1.length){
+   result.push(arr1[i]); 
+   i++;
+ }
+ while(j<arr2.length){
+   result.push(arr2[j]);
+ }
+  return result;
+}
+
+MergeSort pseudocode: 
+- Break up the array into halves until you have arrays that are empty or have one element.
+- Once you have smaller sorted arrays merge those arrays with other sorted arrays with other sorted arrays until you are at the full length of the array
+- Once the array has been merged back together return the merged array;
+
+function mergeSort(arr){
+  if(arr.length <=1) return arr;
+  let mid = Math.floor(arr.length/2);
+  let left= mergeSort(arr.slice(0,mid));
+  let right= mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
+
+
+Quick sort: 
+- Like merge sort, exploits the fact that arrays of 0 or 1 element are always sorted
+- Works by  selecting one element called the pivot and finding the index where the pivot should end up in the sorted array
+- Once the pivot is positioned appropriately, quick sort can be applied on either side of the pivot
+
+ function pivot(arr,start=0,end= arr.length){ //[3,1,6,0,8,2] [9,6,3,2,1]
+        let swapidx = start;;
+        let swap = (arr, idx1, idx2) => [arr[idx1],arr[idx2]]= [arr[idx2],arr[idx1]];
+        for(let i=start+1; i<arr.length; i++){
+            if(arr[start]>arr[i]){
+             swapidx++;
+             swap(arr, i, swapidx)
+             console.log(arr,i,swapidx);
+            }
+        }
+        swap(arr, start, swapidx);
+        console.log(swapidx);
+       return swapidx;
+    }
+    function quickSort(arr,start=0, end=arr.length){
+        if(start<end){
+        let pivotIndex = pivot(arr, start, end);//2
+        quickSort(arr,start,pivotIndex-1);
+        quickSort(arr,pivotIndex+1, end);
+        }
+        return arr;
+    }
+
+Radix sort:
+Radix sort is a special sorting algorithm that works on list of numbers. It never makes comparision between elements. it exploits the fact information about the size of a number is encoded in the number of digits. More digits means bigger number
+Redix sort pseudocode:
+- define a function that accept list of numbers 
+- figure out how many digits the largest number has 
+- loop from k upto the largest number of digits 
+- for each iteration of the loop: 
+ - create a buckets for each digit 0 to 9
+ - place each number in the corresponding bucket based on its kth  digit 
+- Replace our existing array with values in our buckets, starting with 0 and going up to 9
+- return list at the end
+example,
+  var getDigit= (num,digit)=> Math.floor((num/Math.pow(10,digit))%10);
+    var digitCount = (num) =>num==0?1: Math.floor(Math.log10(num)+1);
+    var maxDigit = (nums,max=0)=>{
+        for(let i=0; i<nums.length; i++){
+            max= Math.max(digitCount(nums[i]), digitCount(nums[i]));
+        }
+        return max;
+    }
+    function redixSort(arr){
+     let max= maxDigit(arr), digitBucket;
+     for(let k=0; k<max; k++){
+     digitBucket = Array.from({length:10},()=>[]);
+        for(let i=0; i<arr.length; i++){
+            digitBucket[getDigit(arr[i],k)].push(arr[i]);
+        }
+       console.log(digitBucket);
+       arr= [].concat(...digitBucket);
+       console.log(arr);
+     }
+     return arr;
+    }
+
+Datastructure: 
+Data strucutres are collection of values, the relationships among them, and the functions or operatons that can be applied to the data.
+
+Class: 
+A blueprint for creating objects with predefined properties and methods.
+Syntax: 
+class Student {
+ constructor(firstname, lastName){
+  this.firstName = firstname;
+  this.lastName = lastName;
+  }
+ } 
+
+
+- Creating Objects from class 
+let firstStudent = new Student('siid', 'sharma');
+
+Instance methods: 
+class Student {
+ constructor(firstName, lastName){
+  this.firstnName = firstName;
+  this.lastName = lastname;
+ } 
+fullName(){
+  return `Your full name is ${this.firstName} ${this.lastName} `;
+
+Linked list: 
+A datastructure that contains a head, tail and length property. Linked lists consist of nodes, and each node has a value and a pointer to another node or null.
+
+comparison List with array: 
+- List do not have indexes, arrays do.
+- List Connect via nodes with a next pointer 
+- Insertion and deletion can be expensive in array but easy in list 
+- Array quickly can be accessed at specific but random access is not allowed in list.
+
+Pushing pseudocode 
+- this function should accept a value
+- create a new node using using the value passed to the function 
+- if there is no head property list, set the head and tail to be the newly created node.
+- otherwise set the next property on the tail to be the new node and set the tail property on the list to be the newly created node
+- increament the length by one
+
+implementation or example:
+    class node {
+  constructor(val){
+    this.name= val;
+  } 
+}
+class stingList {
+    constructor (){
+        this.head = null;
+        this.tail = null;
+        this.length =0;
+    }
+    push(val){ // this should accept value
+        // 
+        var newNode = new node(val); //creating new nod
+        if(!this.head){ // setting head and tail
+            this.head = newNode;
+            this.tail= this.head;
+        } else { // setting next property on tail and set head and tail to be the newly created nod and 
+            this.tail.next= newNode;
+            this.tail = newNode;
+        }
+        this.length ++; //increament by 1
+        return this;
+    }
+}
+
+Poping pseudocode: 
+- if there are no nodes in the list return undefined 
+- loop through the list until you rich the tail 
+- set the next property of the 2nd to last of the 2nd last node to be null
+- set the tail to be the 2nd last node
+- decrement the length of the list by 1
+- return the value of the node removed
+example, 
+
+    pop(){
+        if(!this.head) return undefined;
+        var current = this.head;
+        var newTail = current;
+        while(current.next){
+            newTail = current;
+            current= current.next;
+        }
+        this.tail = newTail;
+        this.tail.next = null;
+        this.length --;
+        return current;
+    } 
+
+Shifting pseudocode 
+- if there is no nodes return undefined 
+- store the current head property in a variable
+- set the head property set the head property to be the current head's next property 
+- decrement the length by =return the valu of the node removed
+example, 
+
+    shift(){
+        if(!this.head) return undefined;
+        var currentHead = this.head;
+        this.head= currentHead.next;
+        this.length--;
+        if(this.length ===0)
+        this.head = null;
+        this.tail= null;
+        return currentHead;
+    }
+
+Get pseudocode: 
+- this function should accept an index
+- if the index is less than 0 or greater than or equal to the length of the list, return null
+- loop through the list until you reach the index and return the node at specific index
+example, 
+get(index){
+        if(index<0 || index >= this.length) return null;
+            var counter = 0;
+            var current = this.head;
+            while(counter !== index){
+                current = current.next;
+                counter ++;
+            }
+            return current;
+
+Set pseudocode: 
+- this function should accpet a value and index 
+- use your get function to find the specific node
+- if the node is not found return false
+- if the node is found set the value of that node to be the value passed to the function and return true
+example, 
+ set(value, index){
+        var foundNode = this.get(index);
+        if(foundNode){
+            foundNode.val = value;
+            return true;
+        } 
+        return false;
+    }
+
+Insert pseudocode: 
+- if the index is less than 0 or greater than the length return false
+- if the index is the same as the length push a new node to the end of the list
+- if the index is 0 unshift a new node to the start of the list 
+- otherwise, using the get method access the node at the index-1
+set the next propery on that node node to be the node 
+- set the property on the new node to the previous next
+
+Remove pseudocode: 
+- if the index is less than 0 or greater than the length of the list return undefined
+- if the index is 0, shift
+- if the index is the same as the length-1, pop
+- otherwise, using the get method, access the node at the index-1
+- set the next property on that node to be the next of the next node
+- decreament the length
+- return the value of the node removed
+example, 
+  remove(index){
+        if(index <0 || index >= this.length) return undefined;
+        if(index ===0) return this.shift();
+        if(index ===this.length-1) return this.pop();
+        var prev= this.get(index-1);
+        var removed= prev.next;
+        prev.next = removed.next;
+        this.length--;
+        return removed;
+    }
+Reverse pseudocode: 
+- swap the head and tail
+- create a variable called next
+- create a variable called prev
+- create a variable called node and initialize to the head property
+- loop through the list
+- set next to be the next property on whatever node is 
+- set the next property on the node to be whatever prev is 
+- set prev to be the value of node variable
+- set the node variable to be the value of the next variable
+example, 
+ reverse(){
+        var temp = this.head;
+        this.head = this.tail;
+        this.tail = temp;
+        var next;
+        var prev = null;
+        for(var i=0; i<this.length; i++){
+            next= temp.next;
+            temp.next = prev;
+            prev = temp;
+            temp =next;
+        }
+        return this;
+Doubly link list: 
+Almost identical to singly Lists, except node has another pointer, to the previous node.
+
+Pushing pseudocode: 
+- create a new node with the value passed to the function
+- if the head property is null set the head and tail to be the newly created node
+- if not, set the next property on the tail to be that node
+- set the previous property on the newly created node to be the tail
+- set the tail to be the newly created node
+- increament the length
+- return the doubly linked list
+example, 
+ push(val){
+        var newNode = new Node(val);
+        if(!this.head){
+            this.head = newNode;
+            this.tail = this.head;
+        } else {
+        this.tail.next = newNode;
+        newNode.prev= this.tail;
+        this.tail = newNode;}
+        this.length++;
+        return this;
+    }
+Pop pseudocode: 
+- if there is no head return undefined 
+- store the current tail in a variable to return later
+- if the length is 1, set the head and tail to be null
+- update the tail to be the previous node
+- set the new tail next to null
+- deceament the length
+- return the value removed
+example.
+pop(){
+        if(!this.head) return undefined;
+        if(this.length == 1) {
+            this.head = null;
+            this.tail = null;
+        }
+        var temp = this.tail;
+         this.tail =temp.prev;
+        this.tail.next = null;
+        this.length--;
+        return temp;
+    }
+Shifting pseudocode: 
+- if the length is 0, return undefined
+- store the current head property in a variable old
+- if the length is one set the head and tail to be null
+- update the head to be the next of the old head
+- set the head's prev property to null 
+- set the old head's next to null
+- decreament the length
+- return old head
+example, 
+
+    shift(){
+        var oldHead = this.head;
+        this.head = oldHead.next;
+        this.head.prev = null;
+        oldHead.next = null;
+        this.length--;
+        return oldHead;
+    }
+Unshifting pseudocode: 
+- create a new node with the value passed to the function 
+- if the length is 0 set the head and tail to be new node
+- otherwise, set the prev property on the head of the list to be the new node
+- set the next property on the new node to be the head property
+- update the head to be the new node
+- increament the length
+- return the list
+
+Get pseudocode: 
+- if the index is less than 0 or greater or equal to the length, return null
+- if the index is less than or equal to half the length of the list, loop through the list starting from the head and loop towards the middle, and return the node once it is found
+- if the index is greater than half the length of the list, loop through the list starting from the tail and loop towards middle
+example, 
+
+    get(index){
+        if(index <this.length/2){
+            console.log('working from start');
+        var current = this.head;
+        var count =0; 
+        while(count !==index){
+            current = current.next;
+            count++;
+        }
+        return current;
+        } else {
+            console.log('working from end')
+            var current = this.tail;
+            var count = this.length-1;
+            while(count!==index){
+                current = current.prev;
+                count--;
+            }
+            return current;
+        }
+    }
+Set pseudocode:
+-create a variable which is the result of the get method at the get method at the index passed to the function
+- if the get method returns a valid node, set the value of that node to be the value passed to the function and return true
+- otherwise, return false
+example,
+set(val, index){
+        var found = this.get(index);
+        if(found){
+            found.val = val;
+            return true; 
+        }
+        return false;
+    }
+Insert pseudocode: 
+- if the index is less than 0 or greater than or equal to the length return false
+- if the index is 0, unshift
+- if the is the same as the length, push
+- use the get method to access the index-1
+- set the next and prev properties on the correct nodes to everything working
+- increament the length
+example,
+  insert(val, index){
+         var newNode = new Node(val);
+         var before = this.get(index-1);
+         var after = before.next;
+         before.next =newNode;
+         newNode.prev = before;
+         after.prev = newNode;
+         newNode.next = after;
+         this.length++;
+         return newNode;
+     }
+Remove pseudocode: 
+-if the index is less than 0 or greater than or equal to the length return undefined
+- if the index is 0, shift
+- if the index is the same as the length-1, pop
+- use the get method to retrieve the item to be removed
+- update the next and prev properties to remove the found node from the list
+- set next and prev to null on the found node
+- decreament the length
+- return the removed node
+example, 
+remove(index){
+         var remove = this.get(index);
+         remove.prev.next = remove.next;
+         remove.next.prev = remove.prev;
+         remove.next = null;
+         remove.prev = null;
+         this.length--;
+         return remove;
+     }
+
+Stack: A LIFO data strcuture, in which the last element added to the stack will be the first element removed from the stack
+Stacks are used in managing function invocation, undo/redo, routing is trated like a stack
+Pushing pseudocode: 
+- the function should accept a value
+- create a new node with that value
+- if there is no node in stack set the first and last property to be the newly created node
+- if there is at least one node create a variable that stores the current first propety on the stack
+- reset the first property to be the newly created node
+- set the next property on the node to be the previously created variable
+- increament the sixe of the stack by 1
+example. 
+  push(val){
+        var newNode= new Node(val);
+        if(!this.first){
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            var temp = this.first;
+            this.first = newNode;
+            this.first.next = temp
+        }
+        this.size++;
+        return this;
+    }
+Poping pseudocode: 
+- if there is no node in the stack return full
+- create temporary variable to store the first property on the stack 
+- if there is only one node set the first and last property to be null
+- if there is more than one node set the first property to be the next property on the current first
+- decreament the size by 1
+- return the value of the node removed
+example, 
+pop(){
+        if(!this.first) return null;
+        if(this.first ==this.last){
+            this.last == null;
+        }
+        var temp = this.first;
+        this.first = this.first.next;
+        this.size--;
+        return temp.val;
+    }
+ 
+Queue: A FIFO data structure, first in first out.
+we use queue in background tasks, uploading resourses, printing task
+Enqueue pseudocode(same like push in singly list): 
+- this function accept value
+- create a new node uding value passed to the function
+- if there  are no nodes in the queue set this node to be the first and last property of the queue
+- otherwise set the next property on the current last to be that node and then set the last property of the queue to be that node
+
+
+Dequeue pseudocode: 
+- if there is not first property just return null
+- store the firsst property in a variable
+- see if the first is the same as last , if so set the first and last to be null
+- if there is more than 1 node set the first property to be next property of first
+- decreament the size by 1
+- return the value of the node dequeued
+
+
+BINARY SEARCH TREES:
+Tree: A data structure that consists of nodes in a parent/child relationship
+Tree terminology: 
+-Root: the top node in a tree
+-Child: A node directly connected to another node when moving away from the root
+-Parent: the converse notion of a child
+-Sibling: A group of nodes with the same parent
+-Leaf: A node with no children
+-Edge: the connection between one node and another
+
+Inserting a node pseudocode: 
+- create a new node 
+- starting at the root:
+ - check if there is a root, if not the root now becomes that new node
+ - if there is a root, check if the value of new node is greater than or less than the value of the root
+  -if it is greater: 
+     -check to see if there is a node to the right, if there is move to that node and repeats these processes
+     - if there isnot, add that node as the right property
+   -if it is less: 
+      - check if there is a node left, if yes, mpve to that node and repeat these steps
+      - if there is not, add that node as left property
+example, 
+
+    insert(val){
+        var newNode = new Node(val);
+        if(this.root === null){
+            this.root = newNode;
+            return this;
+        }
+        var current = this.root;
+        while(true){
+            if(current.val === val) return undefined;
+            if(val<current.val){
+                if(current.left ==null){
+                    current.left =newNode;
+                    return this;
+                } else{
+                    current = current.left;
+                }
+            } else if(val > current.val){
+                if(current.right == null){
+                    current.right = newNode;
+                    return this;
+                } else {
+                    current = current.right;
+                }
+            }
+        }
+    }
+Finding node pseudocode:
+- check if there is a root, if not we are done searching
+- if there is a root check if the value of the new node is the value we are looking for. if we found it we are done
+- if not, see if the value is greater than or less than the value of the root
+- if it is greater:
+  -if there is a node to the right, move to that node and repeat these steps
+  -if not, we are done searching
+- if it is less: 
+  -if node to a left, move to that node, and repeat these steps
+  -if not, we are done searching
+example, 
+ find(val){
+        if(this.root ===null) return false;
+        var current = this.root;
+        while(current && true){
+            if(val < current.val){
+                current = current.left;
+            }
+            else if(val >current.val){
+                current = current.right;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+Trasversing  a tree: 
+-Breadth-first search(BFS)
+-Depth-first search(DFS)
+
+BFS steps(iteratively):
+-create a queue and a variable to store the values of nodes visited
+-place the root node in the queue
+-loop as long as there is anything in the queue
+-dequeue a node from the queue and push the value of the node into the variables that stores the nodes
+-if there is left property on the node dequeued- add it to the queue
+-if there is a right property on the node deuqued- add it to the queue
+-return the variable that stores the values
+example,
+
+    BFS(){
+        var node = this.root, data =[], queue = [];
+        queue.push(node);
+        while(queue.length){
+            node = queue.shift();
+            data.push(node.val);
+            if(node.left) queue.push(node.left);
+            if(node.right) queue.push(node.right);
+        }
+        return data;
+    }
+DFS-PreOrder (steps-recursively): 
+-create a variable to store the values of nodes visited 
+-store the root of the BST in a variable called current
+-write a helper function which accpet a node
+-push the value of the node to the variable that stores the values
+-if the node has left property, call the helper function with the left property on the node
+-if the node has a right property call helper function with the right property on the node
+-invoke the helper function with current variable
+-return the array of value
+example,
+
+    BFSPre(){
+        var node = this.root, data = [];
+        function traverse(node){
+            data.push(node.val);
+            if(node.left) traverse(node.left);
+            if(node.right) traverse(node.right);
+        }
+        traverse(node);
+        return data;
+    }
+DFS-PostOrder (steps-recursively)
+-create a variable to store the values of node visited
+-store the root of the BST in a variable called current 
+-write a helper function which accept a node
+-if the node has a left property, call the helper function with the left property on the node
+-if the node has a right property, call the helper function with the right property on the node
+-push the value of the node to the variable that stores the values
+-invoke the helper function with the current variable
+-return the array of values
+example,
+
+    BFSPost(){
+        var current = this.root, data =[];
+        function traverse(current){
+            if(current.left) traverse(current.left);
+            if(current.right) traverse(current.right);
+            data.push(current.val)
+        }
+        traverse(current);
+        return data;
+    }
+
+BINARY HEAP: 
+very similar to binary search tree, but with some different rules
+In a MaxbinaryHeap, parent nodes are always larger than child nodes. In a MinBinaryHeap, parents nodes are always smaller than child nodes
+Insert pseudocode: 
+- push the value into the values property on the heap
+- bubble up: create a variable called index which is length og the values propery-1
+- create a variable called parentindex which is the floor of (index-1)/2
+- keep looping as long as the values element at the parentIndex is less than the value elemetns at the child index
+- swap the value of the values elements at parentindex with the value of the element property at the child index
+- set the index to be the parentindex and start over
+example,
+ insert(element){
+        this.values.push(element);
+        this.bubbleUp();
+    }
+    bubbleUp(){
+        let idx = this.values.length-1;
+        let element = this.values[idx];
+        while(idx > 0){
+            let parentIdx = Math.floor((idx-1)/2);
+            let parent = this.values[parentIdx];
+            if(element <= parent) break;
+            //if(element > parent){
+                this.values[parentIdx] = element;
+                this.values[idx] = parent;
+                idx = parentIdx;
+            }
+        }
+Removing(extractMax): 
+- swap the first value in the values property with the last one
+- pop from the values property so you can return the value at the end 
+- have the new root sink down to the correct spot
+ - your parent index start at 0
+ - find the index of left child: 2*index + 1 
+ - find the index of right child: 2*index + 2
+ - if the left or right child is greater than the element, swap. if both left and right children are larger swap with the larger child
+ - the child index you swapped to now becomes the new parent index
+ - keep looking and swapping until neither child is larger than the element
+ - return the old root
+example, 
+    }
+    extractMax(){
+        let end = this.values.pop();
+        let max = this.values[0];
+        if(this.values.length>0)
+         {this.values[0] = end;
+        this.sinkDown();
+        }
+        return max;
+    } 
+    sinkDown(){
+        let idx =0;
+        let len = this.values.length;
+        let element = this.values[0];
+        while(true){
+            let leftIdx = 2*idx + 1;
+            let rightIdx = 2*idx + 2;
+            let swap = null;
+            if(leftIdx < len){
+                var left = this.values[leftIdx];
+                if(left > element){
+                    swap = leftIdx;
+                }
+            }
+            if(rightIdx <len){
+                var right = this.values[rightIdx];
+                if((right > element && swap == null)||(right > left&& swap != null)){
+                    swap = rightIdx;
+                }
+            }
+            if(swap == null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
+        }
+    }    
+
+Priority Queue: 
+A data structure where each element has a priority. elements with higher priorities are served before elements with lower priorities
+
+
+Hash table: 
+Hash tables are used to store key-values pairs. they are like arrays but the keys are not ordered. Unlike arrays, hash tables are fast for all of the following operations: finding values, adding new values and removing values
+Good hash makes: 1. fast, 2. does not cluster outputs at specific indices, but distributes uniformly, 3. deterministic(same input yields same output)
+
+Dealing with collisions: 
+Even with a large array and great hash function, collision are inevitable. there are many strategies for dealing with collisions, but we will focus on two: separate chaining and linear probing
+
+Set: 
+- Accept a key and value
+- Hash the key
+- Stores the key-value pair in the hash table
+Get:
+- Accept a key
+- Hashes the key
+- Retrieves the key-value pair in the hash table
+- If the key is not found, returns undefined 
+example,
+     class Hash{
+         constructor(size =5){
+             this.keyMap = new Array(size);
+         }
+         hashF(keys){
+        let sum = 0;
+        let weirdPrime = 31;
+        for(let i = 0; i< Math.min(keys.length, 100); i++){
+            let char = keys[i];
+            let value = char.charCodeAt(0) - 96;
+            sum = (sum * weirdPrime+ value)%this.keyMap.length;
+        }
+        return sum;
+      }
+      set(keys, value){
+         var index = this.hashF(keys);
+         if(!this.keyMap[index]) {
+             this.keyMap[index] = [];
+         }
+         this.keyMap[index].push([keys, value]);
+      }
+      get(keys){
+          let index = this.hashF(keys);
+          if(this.keyMap[index]){
+         for(let i=0; i<this.keyMap[index].length; i++)
+             if(this.keyMap[index][i][0]===keys)  return this.keyMap[index][i][1];
+          }
+          return;
+      }
+     }
+     var h = new Hash();
+   
+Keys and value: 
+
+      values(){
+          let value = [];
+          for(let i=0; i<this.keyMap.length; i++){
+              if(this.keyMap[i]){
+                  for(let j=0; j<this.keyMap[i].length; j++){
+                   if(!value.includes(this.keyMap[i][j][1]))
+                   value.push(this.keyMap[i][j][1]); 
+                  }
+              }
+          }
+          return value;
+      }
+
+Graph datastructure:
+Adding  a vertex: 
+- write a method called addVertex, which accepts a name of a vertex
+- it should add a key to the adjacency list with the name of the vertex and set its value to be an empty array
+Adding an edge: 
+- this function should accept two vertices, we can call them vetex1 and vertex2
+- the function should find in the adjacency list the key of vertex1 and push vertex2 to the array
+- the function should find in the adjacency list the key of vertex2 and push vertex1 to the array
+- dont worry about handling errors
+Removing an Edge: 
+- this function should two vertices, we will call them vertex1 and vertex2
+- the function should reassign the key of vertex1 to be an array that does not contain vertex 2
+- the function should reassign the key of vertex2 to be an array that does not contain vertex1
+Removing a vertex: 
+- the function should accept a vertex to remove 
+- the function should loop as long as there are any other vertices in the adjacency list for that vertex
+- inside the loop call our removeEdge function with the vertex we are removing and any values in the asjacency list that vertex
+- delete the key in the adjancy list for that vertex
+example, 
+  addVertex(vertex){
+       if(!this.adjacentList[vertex]) this.adjacentList[vertex]=[];
+   }
+   addEdge(v1, v2){
+       this.adjacentList[v1].push(v2);
+       this.adjacentList[v2].push(v1);
+   }
+   RemoveEdge(vertex1, vertex2){
+       this.adjacentList[vertex1] = this.adjacentList[vertex1].filter(v=>v!==vertex2)
+       this.adjacentList[vertex2] = this.adjacentList[vertex2].filter(v=>v!==vertex1)
+   }
+   removeVertex(vertex){
+       while(this.adjacentList[vertex].length){
+           var adjanctVertex = this.adjacentList[vertex].pop();
+           this.RemoveEdge(vertex, adjanctVertex);
+           delete this.adjacentList[vertex];
+       }
+   }
+Depth first traversal(recursive steps):
+- the function should accept a starting node
+- create a list to store end result, to be returned at the very end
+- create an object to store visited vertices 
+- create a helper function which accepts a vertex
+- the helper function should return early if the vertex is empty
+- the helper function should place the vertex it accepts into the visited object and push that vertex into the result array
+- loop over all of the values in the adjacnyList for that vertex
+- if any of those values have not been visited, recursively invoke the helper function with that vertex
+example, 
+
+   DFS(start){
+       var result = [];
+       var visited = {};
+       let adjacentList = this.adjacentList;
+       (function dfs(vertex){
+        if(!vertex) return null;
+        visited[vertex] = true;
+        result.push(vertex);
+       adjacentList[vertex].forEach(element => {
+           if(!visited[element]) return dfs(element);
+       });
+       })(start);
+       return result;
+   }
+Depth first traversal(Iterative):
+- the function should accept a starting node
+- create a stack to help use keep track of vertices(use list/array)
+- create a list to store the end result, to be returned at the very end 
+- create a n object to store visited vertices 
+- add the starting vertex to the stack and mark it visited
+- while the stack has something in it: 
+ - pop the next vertex from the stack
+ - if that vertex has not been visited yet: 
+    - mark it as visited 
+    - add it to the result list
+    - push all of its neghbors into the stack
+return the result array
+example, 
+ DFSIteratively(start){
+      var result = [];
+      var visited = {};
+      var stack = [start];
+      visited[start] = true;
+      while(stack.length){
+          console.log(stack);
+        let currentVertex = stack.pop();
+        result.push(currentVertex);
+        this.adjacentList[currentVertex].forEach(element => {
+            if(!visited[element]){
+                visited[element] = true;
+                stack.push(element);
+            }
+        });
+      }
+      return result;
+  }
+Breadth first: 
+- this function should accpet a starting vertex 
+- create a queue like stack(you can use an array) and place the startin gvertex in it.
+- create an array to store the nodes visited
+- mark the starting vertex as visited
+- loop as long as there is anything in the queue 
+- remove the first vertex from the queue and push it into the array that stores nodes visited
+- loop over each vertex in the adjacency list for the vertex you are visiting
+- if it is not inside the object that stores node visited, mark it as visited and enqueue that vertax
+- once you have finished looping return the array of visited nodes
+example,
+
+  BFS(start){
+      var result= [];
+      var visited = {};
+      var queue = [start];
+      visited[start] = true;
+      while(queue.length){
+          console.log(queue);
+          const currentVertex = queue.shift();
+          result.push(currentVertex);
+          this.adjacentList[currentVertex].slice().reverse().forEach(neighbour => {
+              if(!visited[neighbour]){
+                  visited[neighbour] = true;
+                  queue.push(neighbour);
+              }
+          })
+      }
+      return result;
+  }
+
+Dijkstra pseudocodes: 
+- this function should accept a starting and ending vertex
+- create an object and set each key to be every vertex in the adjancy list with  a value of infinity, except for startin vertex which should have a   value of 0
+- after setting a value in the distance object, add each vertex with a prority of infinity to the priority queue, except the starting vertex, which should have priority of 0
+- create another object called previous and set each key to be every vertex in the adjacenu list with a value of null
+- start looping as long as there is anything in the priority queue
+- dequeue a vertex from the priority queue
+- if that vertex is the same as the ending vertex- we are done
+- otherwise loop through each value in the adjancy list at that vertex
+- calculate the distance to that vertex from the starting vertex
+- if the distance is less than what is currently stored in our distance object
+- update the distance object with new lower distance
+- update the previous object to contain that vertex
+- enqeqe the vertex with the total distance from the start node
+example, 
+
+Dynamic programming: 
+A method for solving complex problem by breaking it down into a simpler subproblems, solving each of those subproblems just once, and storing their solutions
+
+Overlaping susbproblems: 
+A problem is said to have overlaping subproblems if it can be broken down into subproblems which are reused several times
+
+Optimal substructure: 
+A problem is said to have optimal sustructure if an optimal solution can be constucted from optimal solutions of its subproblems
+
+Problem solved without using dynamic:
+ function fib(n){
+        if(n<=2) return 1;
+        return fib(n-1) + fib(n-2);
+    }
+Problem solved using dynamic memoization 
+ function fib(n, memo =[undefined, 1, 1]){
+        if(memo[n] !== undefined) return memo[n];
+        var result= fib(n-1, memo) + fib(n-2, memo);
+        memo[n] = result;
+        return result;
+    }
+Problem solved using dynamic tablutation
+function fib_tab(n){
+        if(n<=2) return 1;
+        var fibNums = [0,1,1];
+        for(var i=3; i<=n; i++){
+            fibNums[i] = fibNums[i-1] + fibNums[i-2];
+        }
+        return fibNums[n];
+    }
