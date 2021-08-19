@@ -433,4 +433,63 @@
 // bst.insert(9)
 // console.log(bst)
 
+class HashTable{
+    constructor(size=10){
+        this.keyMap = new Array(size)
+    }
+
+    _hash(key) {
+        let total = 0;
+        let WEIRD_PRIME = 31;
+        for (let i = 0; i < Math.min(key.length, 100); i++) {
+          let char = key[i];
+          let value = char.charCodeAt(0) - 96
+          total = (total * WEIRD_PRIME + value) % this.keyMap.length;
+        }
+        return total;
+      }
+
+      set(key, val){
+          let index = this._hash(key); 
+          if(!this.keyMap[index]) this.keyMap[index] = [];
+          this.keyMap[index].push([key, val])
+          return this;
+      }
+
+      get(key){
+          let index = this._hash(key); 
+          if(!this.keyMap[index]) return undefined;
+          for (let i = 0; i < this.keyMap[index].length; i++) {     
+              if(this.keyMap[index][i][0]===key)   return this.keyMap[index][i][1]      
+          }
+      }
+
+      keys(){
+          let result = []; 
+          for (let i  of this.keyMap) {
+              if(i) {
+                 result= result.concat(i)
+              }             
+          }
+          return result.map(val=>val[0]);
+      }
+
+      values(){
+        let result = []; 
+        for (let i  of this.keyMap) {
+            if(i) {
+               result= result.concat(i)
+            }             
+        }
+        return result.map(val=>val[1]);
+    }
+
+}
+
+let hash = new HashTable(10); 
+hash.set("name", "siid")
+hash.set("age", "21")
+hash.set("town", "parramatta")
+hash.set("state", "nsw")
+console.log(hash)
 
