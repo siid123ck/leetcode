@@ -362,76 +362,95 @@
 // list.enqueue('third');
 // console.log(list)
 
-// class Node{
-//     constructor(val){
-//         this.val=val;
-//         this.left=null;
-//         this.right=null;
-//     }
-// }
+class Node{
+    constructor(val){
+        this.val=val;
+        this.left=null;
+        this.right=null;
+    }
+}
 
-// class BST{
-//     constructor(){
-//         this.root = null;
-//     }
+class BST{
+    constructor(){
+        this.root = null;
+    }
 
-//     insert(val){                        //      4
-//         let newNode = new Node(val);    //  2          8
-//         if(this.root===null){           // 1    3    6     9
-//             this.root = newNode; 
-//             return this;
-//         } 
-//             let current = this.root; 
-//             while(true){
-//                 if(val > current.val){
-//                     if(current.right===null){
-//                         current.right=newNode; 
-//                         return this;
-//                     } 
-//                      current = current.right;
+    insert(val){                        //      4
+        let newNode = new Node(val);    //  2          8
+        if(this.root===null){           // 1    3    6     9
+            this.root = newNode; 
+            return this;
+        } 
+            let current = this.root; 
+            while(true){
+                if(val > current.val){
+                    if(current.right===null){
+                        current.right=newNode; 
+                        return this;
+                    } 
+                     current = current.right;
                     
-//                 }
+                }
 
-//                 else if(val< current.val){
-//                     if(current.left===null){
-//                         current.left=newNode;
-//                         return this;
-//                     } 
-//                      current = current.left;
+                else if(val< current.val){
+                    if(current.left===null){
+                        current.left=newNode;
+                        return this;
+                    } 
+                     current = current.left;
                     
-//                 } else{
-//                     current.count = ++current.count || 2;
-//                     return this;
-//                 }
-//             }
+                } else{
+                    current.count = ++current.count || 2;
+                    return this;
+                }
+            }
         
-//     }
+    }
    
-//                                //      4
-//                                //  2          8
-//                                // 1    3    6     9
-//     find(val){
-//         let current = this.root;
-//         while(current){
-//             if(current.val===val) return current;
-//             if(val>current.val){
-//                 if(current.right===null) return undefined;
-//                 current = current.right;
-//             }
-//             if(val<current.val){
-//                 if(current.left===null) return undefined;
-//                 current= current.left;
-//             }
-//         }
-//     }
-// }
+                               //      4
+                               //  2          8
+                               // 1    3    6     9
+    find(val){
+        let current = this.root;
+        while(current){
+            if(current.val===val) return current;
+            if(val>current.val){
+                if(current.right===null) return undefined;
+                current = current.right;
+            }
+            if(val<current.val){
+                if(current.left===null) return undefined;
+                current= current.left;
+            }
+        }
+    }
 
-// const bst =new BST(); 
-// bst.insert(4); 
-// bst.insert(7)
-// bst.insert(2)
-// bst.insert(9)
-// console.log(bst)
+    //binary search tree
+    breadthST(){
+        let node = this.root, queue=[], data=[];
+        queue.push(node)
+        
+        while(queue.length){
+            node = queue.shift(); 
+            data.push(node)
+            if(node.left) queue.push(node.left);
+            if(node.right) queue.push(node.right);
+        }
+
+        return data;
+    }
+}
+
+const bst =new BST(); 
+bst.insert(4); 
+bst.insert(7)
+bst.insert(2)
+bst.insert(9)
+bst.insert(23); 
+bst.insert(17)
+bst.insert(21)
+bst.insert(14)
+console.log(bst)
 
 // class HashTable{
 //     constructor(size=10){
