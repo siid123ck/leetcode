@@ -464,7 +464,7 @@ class BST{
       function traverse(node){
           if(node.left) traverse(node.left)
           if(node.right) traverse(node.right)
-          data.push(node);
+          data.push(node.val);
         }
 
         traverse(this.root)
@@ -481,7 +481,6 @@ bst.insert(23);
 bst.insert(17)
 bst.insert(21)
 bst.insert(14)
-console.log(bst.breadthST())
 console.log(bst)
 
 // class HashTable{
