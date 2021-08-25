@@ -439,6 +439,21 @@ class BST{
 
         return data;
     }
+
+    // depth first search preorder
+
+    dfsPre(){
+      let data=[]; 
+
+      function traverse(node){
+            data.push(node);
+            if(node.left) traverse(node.left)
+            if(node.right) traverse(node.right)
+        }
+
+        traverse(this.root)
+        return data;
+    }
 }
 
 const bst =new BST(); 
