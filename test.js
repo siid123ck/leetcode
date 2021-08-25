@@ -731,6 +731,23 @@ class Graph{
         }
         delete this.adjacent[val];
     }
+
+    traverseRecursive(start){
+        let visited = {}; 
+        let result = []; 
+        let adjacentList = this.adjacent;
+        
+       function helper(vertex){
+           if(!vertex) return null;
+           visited[vertex] = true; 
+           result.push(vertex)
+           adjacentList[vertex].forEach(neighbor => {   
+               if(!visited[neighbor]) return helper(neighbor)        
+           });
+       }
+       helper(start);
+       return result;
+    }
 }
 
 let graph = new Graph();
