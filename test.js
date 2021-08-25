@@ -362,142 +362,142 @@
 // list.enqueue('third');
 // console.log(list)
 
-class Node{
-    constructor(val){
-        this.val=val;
-        this.left=null;
-        this.right=null;
-    }
-}
+// class Node{
+//     constructor(val){
+//         this.val=val;
+//         this.left=null;
+//         this.right=null;
+//     }
+// }
 
-class BST{
-    constructor(){
-        this.root = null;
-    }
+// class BST{
+//     constructor(){
+//         this.root = null;
+//     }
 
-    insert(val){                        //      4
-        let newNode = new Node(val);    //  2          8
-        if(this.root===null){           // 1    3    6     9
-            this.root = newNode; 
-            return this;
-        } 
-            let current = this.root; 
-            while(true){
-                if(val > current.val){
-                    if(current.right===null){
-                        current.right=newNode; 
-                        return this;
-                    } 
-                     current = current.right;
+//     insert(val){                        //      4
+//         let newNode = new Node(val);    //  2          8
+//         if(this.root===null){           // 1    3    6     9
+//             this.root = newNode; 
+//             return this;
+//         } 
+//             let current = this.root; 
+//             while(true){
+//                 if(val > current.val){
+//                     if(current.right===null){
+//                         current.right=newNode; 
+//                         return this;
+//                     } 
+//                      current = current.right;
                     
-                }
+//                 }
 
-                else if(val< current.val){
-                    if(current.left===null){
-                        current.left=newNode;
-                        return this;
-                    } 
-                     current = current.left;
+//                 else if(val< current.val){
+//                     if(current.left===null){
+//                         current.left=newNode;
+//                         return this;
+//                     } 
+//                      current = current.left;
                     
-                } else{
-                    current.count = ++current.count || 2;
-                    return this;
-                }
-            }
+//                 } else{
+//                     current.count = ++current.count || 2;
+//                     return this;
+//                 }
+//             }
         
-    }
+//     }
    
-                               //      4
-                               //  2          8
-                               // 1    3    6     9
-    find(val){
-        let current = this.root;
-        while(current){
-            if(current.val===val) return current;
-            if(val>current.val){
-                if(current.right===null) return undefined;
-                current = current.right;
-            }
-            if(val<current.val){
-                if(current.left===null) return undefined;
-                current= current.left;
-            }
-        }
-    }
+//                                //      4
+//                                //  2          8
+//                                // 1    3    6     9
+//     find(val){
+//         let current = this.root;
+//         while(current){
+//             if(current.val===val) return current;
+//             if(val>current.val){
+//                 if(current.right===null) return undefined;
+//                 current = current.right;
+//             }
+//             if(val<current.val){
+//                 if(current.left===null) return undefined;
+//                 current= current.left;
+//             }
+//         }
+//     }
 
-    //binary search tree
-    breadthST(){
-        let node = this.root, queue=[], data=[];
-        queue.push(node)
+//     //binary search tree
+//     breadthST(){
+//         let node = this.root, queue=[], data=[];
+//         queue.push(node)
 
-        while(queue.length){
-            node = queue.shift(); 
-            data.push(node.val)
-            if(node.left) queue.push(node.left);
-            if(node.right) queue.push(node.right);
-        }
+//         while(queue.length){
+//             node = queue.shift(); 
+//             data.push(node.val)
+//             if(node.left) queue.push(node.left);
+//             if(node.right) queue.push(node.right);
+//         }
 
-        return data;
-    }
+//         return data;
+//     }
 
-    // depth first search preorder
+//     // depth first search preorder
 
-    dfsPre(){
-      let data=[]; 
+//     dfsPre(){
+//       let data=[]; 
 
-      function traverse(node){
-            data.push(node.val);
-            if(node.left) traverse(node.left)
-            if(node.right) traverse(node.right)
-        }
+//       function traverse(node){
+//             data.push(node.val);
+//             if(node.left) traverse(node.left)
+//             if(node.right) traverse(node.right)
+//         }
 
-        traverse(this.root)
-        return data;
-    }
+//         traverse(this.root)
+//         return data;
+//     }
 
 
-    // depth first search preorder
+//     // depth first search preorder
 
-    dfsPost(){
-      let data=[]; 
+//     dfsPost(){
+//       let data=[]; 
 
-      function traverse(node){
-          if(node.left) traverse(node.left)
-          if(node.right) traverse(node.right)
-          data.push(node.val);
-        }
+//       function traverse(node){
+//           if(node.left) traverse(node.left)
+//           if(node.right) traverse(node.right)
+//           data.push(node.val);
+//         }
 
-        traverse(this.root)
-        return data;
-    }
+//         traverse(this.root)
+//         return data;
+//     }
 
-    //depth first search inordr
+//     //depth first search inordr
 
-    dfsInorder(){
-        let data = [];
+//     dfsInorder(){
+//         let data = [];
 
-        function traverse(node){
-            if(node.left) traverse(node.left);
-            data.push(node.val);
-            if(node.right) traverse(node.right);
-        }
+//         function traverse(node){
+//             if(node.left) traverse(node.left);
+//             data.push(node.val);
+//             if(node.right) traverse(node.right);
+//         }
 
-        traverse(this.root); 
+//         traverse(this.root); 
         
-        return data;
-    }
-}
+//         return data;
+//     }
+// }
 
-const bst =new BST(); 
-bst.insert(4); 
-bst.insert(7)
-bst.insert(2)
-bst.insert(9)
-bst.insert(23); 
-bst.insert(17)
-bst.insert(21)
-bst.insert(14)
-console.log(bst)
+// const bst =new BST(); 
+// bst.insert(4); 
+// bst.insert(7)
+// bst.insert(2)
+// bst.insert(9)
+// bst.insert(23); 
+// bst.insert(17)
+// bst.insert(21)
+// bst.insert(14)
+// console.log(bst)
 
 // class HashTable{
 //     constructor(size=10){
@@ -559,3 +559,31 @@ console.log(bst)
 // hash.set("state", "nsw")
 // console.log(hash)
 
+class MaxHeap{
+    constructor(){
+        this.values = [28, 17, 21, 12, 8, 6, 13]
+    }
+
+    insert(val){
+        this.values.push(val);
+        this.bubbleUp();
+        return this.values;
+    }
+
+    bubbleUp(){
+        let idx = this.values.length-1;
+        
+        while(idx>0){
+            let parentIdx = Math.floor((idx-1)/2); 
+            if(this.values[idx] <= this.values[parentIdx]) break;
+            let newELement = this.values[idx];
+            let parent = this.values[parentIdx]
+            this.values[parentIdx] = newELement;
+            this.values[idx] = parent;
+            idx = parentIdx;
+        }
+    }
+}
+
+let list = new MaxHeap(); 
+console.log(list)
