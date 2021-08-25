@@ -478,7 +478,7 @@ class BST{
 
         function traverse(node){
             if(node.left) traverse(node.left);
-            data.push(node);
+            data.push(node.val);
             if(node.right) traverse(node.right);
         }
 
