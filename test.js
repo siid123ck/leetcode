@@ -769,6 +769,26 @@ class Graph{
 
         return result;
     }
+
+    traverseDFS(start){
+        let result =[]; 
+        let visited = {}; 
+        let queue = [start]; 
+        visited[start] = true; 
+
+        while(queue.length){
+            let vertex = queue.shift(); 
+            result.push(vertex); 
+            this.adjacent[vertex].forEach(neighbor=>{
+                if(!visited[neighbor]){
+                    queue.push(neighbor);
+                    visited[neighbor] = true;
+                }
+            })
+        }
+
+        return result;
+    }
 }
 
 let graph = new Graph();
