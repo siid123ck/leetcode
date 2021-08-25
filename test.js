@@ -748,6 +748,27 @@ class Graph{
        helper(start);
        return result;
     }
+
+    traverseIteratively(start){
+        let stack = [start]; 
+        let visited = {}; 
+        let result =[]; 
+        visited[start]=true; 
+        
+        while(stack.length){
+            let vertex = stack.pop()
+            result.push(vertex); 
+
+            this.adjacent[vertex].forEach(neighbor=>{
+                if(!visited[neighbor]){
+                    stack.push(neighbor);
+                    visited[neighbor] =true;
+                }
+            })
+        }
+
+        return result;
+    }
 }
 
 let graph = new Graph();
