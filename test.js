@@ -454,6 +454,22 @@ class BST{
         traverse(this.root)
         return data;
     }
+
+
+    // depth first search preorder
+
+    dfsPost(){
+      let data=[]; 
+
+      function traverse(node){
+          if(node.left) traverse(node.left)
+          if(node.right) traverse(node.right)
+          data.push(node);
+        }
+
+        traverse(this.root)
+        return data;
+    }
 }
 
 const bst =new BST(); 
@@ -465,6 +481,7 @@ bst.insert(23);
 bst.insert(17)
 bst.insert(21)
 bst.insert(14)
+console.log(bst.breadthST())
 console.log(bst)
 
 // class HashTable{
