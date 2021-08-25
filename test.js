@@ -559,75 +559,148 @@
 // hash.set("state", "nsw")
 // console.log(hash)
 
-class MaxHeap{
+// class MaxHeap{
+//     constructor(){
+//         this.values = []
+//     }
+
+//     insert(val){
+//         this.values.push(val);
+//         this.bubbleUp();
+//         return this.values;
+//     }
+
+//     bubbleUp(){
+//         let idx = this.values.length-1;
+        
+//         while(idx>0){
+//             let parentIdx = Math.floor((idx-1)/2); 
+//             if(this.values[idx] <= this.values[parentIdx]) break;
+//             let newELement = this.values[idx];
+//             let parent = this.values[parentIdx]
+//             this.values[parentIdx] = newELement;
+//             this.values[idx] = parent;
+//             idx = parentIdx;
+//         }
+//     }
+
+//     extract(){
+//         let parentIdx = 0;
+//         let removeElement = this.values[parentIdx];
+//         let parent = this.values.pop();
+//         this.values[0] = parent; 
+        
+              
+//         while(true){
+//             let leftIdx = 2*parentIdx + 1;
+//             let rightIdx = 2*parentIdx + 2;
+//             let leftChild = leftIdx < this.values.length ? this.values[leftIdx]: 0;
+//             let rightChild= rightIdx < this.values.length ? this.values[rightIdx]: 0; 
+
+
+//             if(this.values[parentIdx] > leftChild && this.values[parentIdx]  > rightChild) break;
+//             if(this.values[parentIdx]  < leftChild || this.values[parentIdx]  < rightChild) {
+//                 if(leftChild > rightChild) {
+//                 swap(this.values, parentIdx, leftIdx)
+//                 parentIdx=leftIdx;
+//                 }
+//                 if(leftChild < rightChild) {
+//                    swap(this.values, parentIdx, rightIdx)
+//                    parentIdx=rightIdx;
+//                  }
+//             }
+            
+//         }
+//        function swap(arr, i, j){
+//            let temp = arr[i];
+//            arr[i] = arr[j]; 
+//            arr[j] = temp
+//         }
+//        return removeElement;
+//     }
+// }
+
+// let list = new MaxHeap(); 
+// list.insert(28)
+// list.insert(17)
+// list.insert(21)
+// list.insert(12)
+// list.insert(8)
+// list.insert(6)
+// list.insert(13)
+// console.log(list)
+
+class Node{
+    constructor(val, priority){
+        this.val=val;
+        this.priority=priority;
+    }
+}
+class PrioeityQueue{
     constructor(){
-        this.values = []
+        this.values= [];
     }
 
-    insert(val){
-        this.values.push(val);
+    enquue(val, key){
+        let newNode = new Node(val, key)
+        this.values.push(newNode)
         this.bubbleUp();
-        return this.values;
+        return this;
     }
 
     bubbleUp(){
-        let idx = this.values.length-1;
-        
+        let idx = this.values.length-1; 
         while(idx>0){
             let parentIdx = Math.floor((idx-1)/2); 
-            if(this.values[idx] <= this.values[parentIdx]) break;
-            let newELement = this.values[idx];
-            let parent = this.values[parentIdx]
-            this.values[parentIdx] = newELement;
-            this.values[idx] = parent;
+            if(this.values[parentIdx].priority <= this.values[idx].priority) break;
+            let temp = this.values[idx];
+            this.values[idx] = this.values[parentIdx]; 
+            this.values[parentIdx] = temp;
             idx = parentIdx;
         }
     }
 
-    extract(){
-        let parentIdx = 0;
-        let removeElement = this.values[parentIdx];
-        let parent = this.values.pop();
-        this.values[0] = parent; 
+    dequeue(){
+        let removeNode = this.values[0]; 
+        let parent = this.values.pop()
+        this.values[0] = parent;
+        let parentIdx = 0; 
         
-              
+        this.values.length === 0 && undefined;
+        if(this.values.length===1){
+            this.values=[];
+            return removeNode;
+        }
         while(true){
-            let leftIdx = 2*parentIdx + 1;
-            let rightIdx = 2*parentIdx + 2;
-            let leftChild = leftIdx < this.values.length ? this.values[leftIdx]: 0;
-            let rightChild= rightIdx < this.values.length ? this.values[rightIdx]: 0; 
-
-
-            if(this.values[parentIdx] > leftChild && this.values[parentIdx]  > rightChild) break;
-            if(this.values[parentIdx]  < leftChild || this.values[parentIdx]  < rightChild) {
-                if(leftChild > rightChild) {
-                swap(this.values, parentIdx, leftIdx)
-                parentIdx=leftIdx;
-                }
-                if(leftChild < rightChild) {
-                   swap(this.values, parentIdx, rightIdx)
-                   parentIdx=rightIdx;
-                 }
+            let leftIdx = parentIdx*2+1;
+            let rightIdx = parentIdx*2+2;
+            let leftPriority = leftIdx<this.values.length? this.values[leftIdx].priority:Infinity;
+            let rightPriority= rightIdx<this.values.length? this.values[rightIdx].priority:Infinity;
+            let parentPriority = this.values[parentIdx].priority
+           
+            if(parentPriority < leftPriority && parentPriority < rightPriority) break;
+            if(leftPriority < rightPriority){
+                swap(this.values, parentIdx, leftIdx); 
+                parentIdx = leftIdx;
             }
-            
+            if(leftPriority > rightPriority){
+                swap(this.values, parentIdx, rightIdx); 
+                parentIdx = rightIdx;
+            }
         }
-       function swap(arr, i, j){
-           let temp = arr[i];
-           arr[i] = arr[j]; 
-           arr[j] = temp
-        }
-       return removeElement;
+
+        function swap(arr, i, j){
+                       let temp = arr[i];
+                       arr[i] = arr[j]; 
+                       arr[j] = temp
+         }
+
+         return removeNode;
+
     }
 }
 
-let list = new MaxHeap(); 
-list.insert(28)
-list.insert(17)
-list.insert(21)
-list.insert(12)
-list.insert(8)
-list.insert(6)
-list.insert(13)
+let list = new PrioeityQueue();
+list.enquue('sum', 4)
+
 console.log(list)
-
-
