@@ -470,6 +470,22 @@ class BST{
         traverse(this.root)
         return data;
     }
+
+    //depth first search inordr
+
+    dfsInorder(){
+        let data = [];
+
+        function traverse(node){
+            if(node.left) traverse(node.left);
+            data.push(node);
+            if(node.right) traverse(node.right);
+        }
+
+        traverse(this.root); 
+        
+        return data;
+    }
 }
 
 const bst =new BST(); 
