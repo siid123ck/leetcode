@@ -630,77 +630,120 @@
 // list.insert(13)
 // console.log(list)
 
-class Node{
-    constructor(val, priority){
-        this.val=val;
-        this.priority=priority;
-    }
-}
-class PrioeityQueue{
-    constructor(){
-        this.values= [];
-    }
+// class Node{
+//     constructor(val, priority){
+//         this.val=val;
+//         this.priority=priority;
+//     }
+// }
+// class PrioeityQueue{
+//     constructor(){
+//         this.values= [];
+//     }
 
-    enquue(val, key){
-        let newNode = new Node(val, key)
-        this.values.push(newNode)
-        this.bubbleUp();
-        return this;
-    }
+//     enquue(val, key){
+//         let newNode = new Node(val, key)
+//         this.values.push(newNode)
+//         this.bubbleUp();
+//         return this;
+//     }
 
-    bubbleUp(){
-        let idx = this.values.length-1; 
-        while(idx>0){
-            let parentIdx = Math.floor((idx-1)/2); 
-            if(this.values[parentIdx].priority <= this.values[idx].priority) break;
-            let temp = this.values[idx];
-            this.values[idx] = this.values[parentIdx]; 
-            this.values[parentIdx] = temp;
-            idx = parentIdx;
-        }
-    }
+//     bubbleUp(){
+//         let idx = this.values.length-1; 
+//         while(idx>0){
+//             let parentIdx = Math.floor((idx-1)/2); 
+//             if(this.values[parentIdx].priority <= this.values[idx].priority) break;
+//             let temp = this.values[idx];
+//             this.values[idx] = this.values[parentIdx]; 
+//             this.values[parentIdx] = temp;
+//             idx = parentIdx;
+//         }
+//     }
 
-    dequeue(){
-        let removeNode = this.values[0]; 
-        let parent = this.values.pop()
-        this.values[0] = parent;
-        let parentIdx = 0; 
+//     dequeue(){
+//         let removeNode = this.values[0]; 
+//         let parent = this.values.pop()
+//         this.values[0] = parent;
+//         let parentIdx = 0; 
         
-        this.values.length === 0 && undefined;
-        if(this.values.length===1){
-            this.values=[];
-            return removeNode;
-        }
-        while(true){
-            let leftIdx = parentIdx*2+1;
-            let rightIdx = parentIdx*2+2;
-            let leftPriority = leftIdx<this.values.length? this.values[leftIdx].priority:Infinity;
-            let rightPriority= rightIdx<this.values.length? this.values[rightIdx].priority:Infinity;
-            let parentPriority = this.values[parentIdx].priority
+//         this.values.length === 0 && undefined;
+//         if(this.values.length===1){
+//             this.values=[];
+//             return removeNode;
+//         }
+//         while(true){
+//             let leftIdx = parentIdx*2+1;
+//             let rightIdx = parentIdx*2+2;
+//             let leftPriority = leftIdx<this.values.length? this.values[leftIdx].priority:Infinity;
+//             let rightPriority= rightIdx<this.values.length? this.values[rightIdx].priority:Infinity;
+//             let parentPriority = this.values[parentIdx].priority
            
-            if(parentPriority < leftPriority && parentPriority < rightPriority) break;
-            if(leftPriority < rightPriority){
-                swap(this.values, parentIdx, leftIdx); 
-                parentIdx = leftIdx;
-            }
-            if(leftPriority > rightPriority){
-                swap(this.values, parentIdx, rightIdx); 
-                parentIdx = rightIdx;
-            }
+//             if(parentPriority < leftPriority && parentPriority < rightPriority) break;
+//             if(leftPriority < rightPriority){
+//                 swap(this.values, parentIdx, leftIdx); 
+//                 parentIdx = leftIdx;
+//             }
+//             if(leftPriority > rightPriority){
+//                 swap(this.values, parentIdx, rightIdx); 
+//                 parentIdx = rightIdx;
+//             }
+//         }
+
+//         function swap(arr, i, j){
+//                        let temp = arr[i];
+//                        arr[i] = arr[j]; 
+//                        arr[j] = temp
+//          }
+
+//          return removeNode;
+
+//     }
+// }
+
+// let list = new PrioeityQueue();
+// list.enquue('sum', 4)
+
+// console.log(list)
+
+class Graph{
+    constructor(){
+        this.adjacent = {};
+    }
+
+    addVertex(val){
+       if(!this.adjacent[val]) this.adjacent[val] = [];
+    }
+
+    addEdge(v1, v2){
+        this.adjacent[v1].push(v2);
+        this.adjacent[v2].push(v1);
+    }
+
+    removeEdge(v1, v2){
+       this.adjacent[v1] = this.adjacent[v1].filter(el=>el !== v2)
+       this.adjacent[v2] = this.adjacent[v2].filter(el=>el !== v1)
+    }
+
+    removeVertex(val){
+        while(this.adjacent[val].length){
+            var adjanctVertex = this.adjacent[val].pop();
+            this.removeEdge(val, adjanctVertex);
         }
-
-        function swap(arr, i, j){
-                       let temp = arr[i];
-                       arr[i] = arr[j]; 
-                       arr[j] = temp
-         }
-
-         return removeNode;
-
+        delete this.adjacent[val];
     }
 }
 
-let list = new PrioeityQueue();
-list.enquue('sum', 4)
-
-console.log(list)
+let graph = new Graph();
+graph.addVertex("A")
+graph.addVertex("B")
+graph.addVertex("C")
+graph.addVertex("D")
+graph.addVertex("E")
+graph.addVertex("F")
+graph.addEdge("A", "B")
+graph.addEdge("A", "C")
+graph.addEdge("B", "D")
+graph.addEdge("C", "E")
+graph.addEdge("D", "E")
+graph.addEdge("D", "F")
+console.log(graph)
