@@ -137,61 +137,61 @@
 // return array;
 // }
 
-//merge sort [3,0,5,1,8]
-// function mergeArr(arr1, arr2){
-//     let i=0, j=0, result=[];
-//     while(i<arr1.length&&j<arr2.length){
-//         if (arr1[i]<arr2[j]) {
-//             result.push(arr1[i]);
-//             i++;
-//         } else {
-//             result.push(arr2[j]);
-//             j++;
-//         }
-//     }
-//     while(i<arr1.length){
-//         result.push(arr1[i]);
-//         i++;
-//     }
-//     while(j<arr2.length){
-//         result.push(arr2[j]);
-//         j++;
-//     }
-//     return result;
-// }
-
-// function mergerSort(arr){
-//     if(arr.length<=1) return arr;
-//     let mid= Math.floor(arr.length/2);
-//     let leftArr=mergerSort(arr.slice(0, mid));
-//     let rightArr=mergerSort(arr.slice(mid))
-//     return mergeArr(leftArr, rightArr);
-// }
-
-//quick sort [3,0,5,1,8] 
-
-function pivot(arr,start=0){ 
-    let swapidx = start;;
-    let swap = (arr, idx1, idx2) => [arr[idx1],arr[idx2]]= [arr[idx2],arr[idx1]];
-    for(let i=start+1; i<arr.length; i++){
-        if(arr[start]>arr[i]){
-         swapidx++;
-        //  swap(arr, i, swapidx)
+// merge sort [3,0,5,1,8]
+function mergeArr(arr1, arr2){
+    let i=0, j=0, result=[];
+    while(i<arr1.length&&j<arr2.length){
+        if (arr1[i]<arr2[j]) {
+            result.push(arr1[i]);
+            i++;
+        } else {
+            result.push(arr2[j]);
+            j++;
         }
     }
-    swap(arr, start, swapidx);
-   return swapidx;
-}
-function quickSort(arr,start=0, end=arr.length){
-    if(start<end){
-    let pivotIndex = pivot(arr, start);
-    console.log(pivotIndex)
-    quickSort(arr,start,pivotIndex-1); 
-    quickSort(arr,pivotIndex+1, end);
+    while(i<arr1.length){
+        result.push(arr1[i]);
+        i++;
     }
-    return arr;
+    while(j<arr2.length){
+        result.push(arr2[j]);
+        j++;
+    }
+    return result;
 }
 
-//->[5,0,3,1,8]->[1,0,3,5,8]->[0,1,3,5,8]
-console.log(quickSort([3,0,5,1,8]))
+function mergeSort(arr){
+    if(arr.length<=1) return arr;
+    let mid= Math.floor(arr.length/2);
+    let leftArr=mergeSort(arr.slice(0, mid));
+    let rightArr=mergeSort(arr.slice(mid))
+    return mergeArr(leftArr, rightArr);
+}
+console.log(mergeSort([3, 9, 1, 8, 5]))
+//quick sort [3,0,5,1,8] 
+
+// function pivot(arr,start=0){ 
+//     let swapidx = start;;
+//     let swap = (arr, idx1, idx2) => [arr[idx1],arr[idx2]]= [arr[idx2],arr[idx1]];
+//     for(let i=start+1; i<arr.length; i++){
+//         if(arr[start]>arr[i]){9
+//          swapidx++;
+//         //  swap(arr, i, swapidx)
+//         }
+//     }
+//     swap(arr, start, swapidx);
+//    return swapidx;
+// }
+// function quickSort(arr,start=0, end=arr.length){
+//     if(start<end){
+//     let pivotIndex = pivot(arr, start);
+//     console.log(pivotIndex)
+//     quickSort(arr,start,pivotIndex-1); 
+//     quickSort(arr,pivotIndex+1, end);
+//     }
+//     return arr;
+// }
+
+// //->[5,0,3,1,8]->[1,0,3,5,8]->[0,1,3,5,8]
+// console.log(quickSort([3,0,5,1,8]))
 
